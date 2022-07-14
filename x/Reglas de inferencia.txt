@@ -1,0 +1,68 @@
+1 -> 2    1 -> 5
+2 -> 3     2 -> /
+3 -> 4     3 -> /
+4 -> MP    4 -> /
+5 -> 6     5 -> 8
+6 -> 7     6 -> /
+7 -> PC    7 -> /
+8 -> 9     8 -> /
+9 -> 10    9 -> /
+10 -> 11   10 -> /
+11 -> RR   11 -> /
+
+
+/ -> Respuesta Desconocida
+
+
+diccionario = {"sintoma0":[sintomas_once[1], sintomas_once[4]], "sintoma1": [sintomas_once[2]], "sintoma2": [sintomas_once[1], sintomas_once[]}
+
+
+
+
+
+        
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma2=W())), Fact(sintoma1="si"))
+    def sintoma_2(self):
+        self.declare(Fact(sintoma2=input(f"¿{sintoma1[1]}?: ")))
+  
+    
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma5=W())), Fact(sintoma1="no"))
+    def sintoma_5(self):
+        self.declare(Fact(sintoma5=input(f"¿{sintoma1[4]}?: ")))
+        
+    
+            
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma3=W())), Fact(sintoma2=MATCH.s2))
+    def sintoma_3(self, s2):
+        if s2 == "si":
+            print("Que bueno carnal")
+        else:
+            print("Ni pedo")              
+            
+            
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma4=W())), Fact(sintoma3="si"))
+    def sintoma_4(self):
+        self.declare(Fact(sintoma4=input(f"¿{sintoma1[3]}?: ")))
+
+
+
+
+
+cadena="var1"
+valor="casa"
+ 
+exec(cadena+"='"+valor+"'")
+ 
+print(var1)
+
+
+
+for i in Server:
+                    exec(i+"=[]")
+ 
+                print(server1)
+                print(server2)
+                print(server3)
+                print(server4)
+
+https://www.lawebdelprogramador.com/codigo/Python/5650-Convertir-una-cadena-en-variable.html

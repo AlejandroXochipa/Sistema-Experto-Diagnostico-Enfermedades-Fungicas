@@ -1,0 +1,4 @@
+Tratamientos: 
+Agrotécnicas: Sembrar variedades resistentes. No volver a sembrar en campos infectados. Evitar excesos y déficit de nitrógeno.
+Químicas: Desinfección de las semillas con... Azoxystrobin, Carbendazim, Carbendazim + Tetraconazol, Carpropamid, Benomilo, Ftalida, Procloraz, Tebuconazol
+Tebuconazol + Triadimenol, Carboxin + Tiram.

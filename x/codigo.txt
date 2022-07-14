@@ -1,0 +1,51 @@
+def abrir_ventana2():
+    #ventana.withdraw()               
+    
+    
+    #prueba = le.Prueba()
+    #prueba.set_pregunta("Hola paquito")
+    #print(le.pb.get_pregunta()) 
+    
+    le.cargar_bs()
+    ed = le.DiagnosticoEnfermedad()
+    ed.reset()
+    watch('RULES', 'FACTS')
+    ed.run()
+    #ed.reset()
+    print("---------------------")
+    watch('RULES', 'FACTS')
+    
+    
+    ventana1 = Toplevel()
+    app = ventana2(ventana1)
+    bg = PhotoImage(file="Imagenes/ventana2.png")
+    label = Label(ventana1, image=bg)
+    label.place(x=0, y=0, relwidth=1, relheight=1)
+    label_pre = Label(ventana1, text="A continuación se te pide contestar una serie de preguntas:", font=("Baskerville Old Face", 20), fg="black", bg = '#AECC36')
+    label_pre.grid(pady=20, padx=80)
+    #print(le.pregunta)
+    
+    
+    
+    radio_boton = Radiobutton(ventana1, text="Si", variable=var3, value="si", command=Mostrar)
+    radio_boton2 = Radiobutton(ventana1, text="No", variable=var3, value="no", command=Mostrar)
+    
+    #Trae la pregunta 
+    label_pregunta = Label(ventana1, text= "¿" + le.pb.get_pregunta() + "?" , font=("Baskerville Old Face", 20), fg="black", bg = '#AECC36')
+    label_pregunta.grid(pady=50, padx=80)
+    
+    #Radio Buttom - Responde la pregunta 
+    var_radio = StringVar()
+    #app.set_respuesta(var_radio)
+    
+    #print(var_radio)
+    radio_boton.grid(pady=70, padx=80)
+    radio_boton2.grid(pady=75, padx=80)
+    #variable_re.set_respuesta(var_radio)
+    #print(variable_re.get_respuesta)
+    #print(var_radio.get())
+    
+   
+    #label_pre.place(y=20, x=165)
+    #label.pack()
+    ventana1.mainloop()

@@ -1,0 +1,421 @@
+from tkinter import messagebox
+from tkinter import *
+from experta import *
+#import diagnostico as dg
+#import diagnostico as dg
+
+
+
+
+sintomas = []
+sintomas_once = []
+sintom = []
+
+
+
+
+def saludo():
+    cultivo = input("¿Que tipo de cultivo es el tuyo?")
+
+
+def cargar_bs():
+    lista = open("Sintomas/ajo_y_cebolla.txt")
+    leer_lista = lista.read()
+    e_lista = leer_lista.split("\n")
+    sintomas.append(e_lista)
+    # print(len(sintomas))
+    lista.close
+
+    # print(len(sintoma))
+
+
+
+class Prueba:
+
+    def __init__(self, diagnostico = ""):
+        self._diagnostico = diagnostico
+
+
+    def get_disganostico(self):
+        return self._diagnostico
+
+    def set_diagnostico(self, pre):
+        self._diagnostico = pre
+
+        
+pb = Prueba()
+
+
+
+
+class ventana2():
+    def __init__(self, ventana1):
+        self.vent2 = ventana1
+        self.vent2.title("Sistema Experto Fungi")
+        self.vent2.geometry('933x700')
+    #    self._var3 = var3 
+        #self.var3 = StringVar() 
+    #def get_respuesta(self):
+    #    return self._var3.get()
+
+    #def set_respuesta(self, re):
+    #    self._var3 = re
+        
+#def abrir_ventana_dg():
+#    dg.abrir_ventana        
+class Diagnostico():
+    def __init__(self, ventana1):
+        self.vent2 = ventana1
+        self.vent2.title("Sistema Experto Fungi")
+        self.vent2.geometry('933x700')
+
+      
+def Mostrar(var, app):
+    #print(var)
+    global respuesta
+    respuesta = var
+    app.destroy()
+    
+respuesta = ""
+
+def Respuesta():
+    return respuesta
+    
+    
+pregunta = ""
+    
+def Pregunta():
+    #print(pregunta, "xd")
+    return pregunta
+    
+
+#def mostrarMensaje():
+#    messagebox.showinfo(message="Mensaje", title="Título")
+#    pass
+    
+def abrir_ventana2():
+    #ventana.withdraw()               
+
+    ventana1 = Tk()
+    app = ventana2(ventana1)
+    bg = PhotoImage(file="Imagenes/ventana2.png")
+    label = Label(ventana1, image=bg)
+    label.place(x=0, y=0, relwidth=1, relheight=1)
+    label_pre = Label(ventana1, text="A continuación se te pide contestar una serie de preguntas:", font=("Baskerville Old Face", 20), fg="black", bg = '#AECC36')
+    label_pre.grid(pady=20, padx=80)
+    #print(le.pregunta)
+    
+    var = StringVar()
+    
+    radio_boton = Radiobutton(ventana1, text="Si", variable=var, value="si", command=lambda: Mostrar(var.get(), ventana1))
+    radio_boton2 = Radiobutton(ventana1, text="No", variable=var, value="no", command=lambda: Mostrar(var.get(), ventana1))
+    
+    #Trae la pregunta 
+    label_pregunta = Label(ventana1, text= "¿" + Pregunta() + "?" , font=("Baskerville Old Face", 20), fg="black", bg = '#AECC36', wraplength=600)
+    label_pregunta.grid(pady=50, padx=80)
+    
+    #Radio Buttom - Responde la pregunta 
+    var_radio = StringVar()
+    #app.set_respuesta(var_radio)
+    
+    #print(var_radio)
+    radio_boton.grid(pady=70, padx=80)
+    radio_boton2.grid(pady=75, padx=80)
+    #variable_re.set_respuesta(var_radio)
+    #print(variable_re.get_respuesta)
+    #print(var_radio.get())
+    
+   
+    #label_pre.place(y=20, x=165)
+    #label.pack()
+    ventana1.mainloop()
+
+
+
+def abrir_ventana_dg():
+
+    ventana1 = Toplevel()
+    app = ventana2(ventana1)
+    bg = PhotoImage(file="Imagenes/Diagnostico.png")
+    label = Label(ventana1, image=bg)
+    label.place(x=0, y=0, relwidth=1, relheight=1)
+    # label_pre = Label(ventana1, text="A continuación se te pide contestar una serie de preguntas:", font=("Baskerville Old Face", 20), fg="black", bg = '#AECC36')
+    #label_pre.grid(pady=20, padx=80)
+    # print(le.pregunta)
+    unframe = LabelFrame(ventana1, bg='#00983C', text="Diagnóstico")
+    unframe.config(font=("Baskerville Old Face", 25), bd=5)
+    unframe.config(width=509, height=560)
+    unframe.place(y=85, x=200)
+
+    label_usu = Label(unframe, text="SU CULTIVO SUFRE DE " + pb.get_disganostico() , font=("Baskerville Old Face", 14))
+    label_usu.config(bg='#00983C')
+    #label_usu.grid(row=1, column=0, pady=10)
+    label_usu.place(x=10, y=10, anchor="w")
+    
+    texto = Text(unframe)
+    texto.config(width=48, height=15, font=("Baskerville Old Face", 15), bg= '#00983C', bd=0)
+    enfermedades = open("Descripcion/"+ pb.get_disganostico() + ".txt", encoding="utf8")
+    lectura_enfermedades = enfermedades.read()
+    texto.insert(INSERT, lectura_enfermedades)
+    enfermedades.close()
+    texto.place(x=10, y=20)
+    
+    
+   
+    
+    #ventana1.openCCL()
+    ventana1.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+class DiagnosticoEnfermedad(KnowledgeEngine):
+    
+       
+    
+    @DefFacts()
+    def inicial(self):
+        yield Fact(action="encontrar_enfermedad")
+        #yield Fact(bandera=False)
+        #sintoma1 = []
+        for sintoma in sintomas:
+            for i in range(len(sintoma)):
+                sintomas_once.append(sintoma[i])
+        
+
+        #print(sintomas_once[:])
+
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma0=W())), salience=1)
+    def sintoma_0(self):
+        
+        # for sintoma in sintomas():
+        #pregunta(globals()[sintomas_once[0]])
+        #print(sintomas_once[0])
+        #pregunta(sintomas_once[0])
+        #pb.set_pregunta(sintomas_once[0])
+        #print(pb.get_pregunta())
+        #print(se.Mostrar())
+        global pregunta
+        pregunta=sintomas_once[0]
+        abrir_ventana2()
+        
+        #print(se.variable_re.get_respuesta())
+        #self.declare(Fact(sintoma0=input(f"¿{sintomas_once[0]}?: ")))
+        self.declare(Fact(sintoma0=Respuesta()))
+        #self.declare(Fact(sintoma0=input(f"¿{sintomas_once[0]}?: ")))
+        # print(sintoma[:])
+
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma1=W())), Fact(sintoma0=MATCH.s0), NOT(Fact(sintoma4=W())))
+    def sintoma_1_y_4(self, s0):
+        if s0 == "si":
+            global pregunta
+            pregunta = sintomas_once[1]
+            abrir_ventana2()
+            #pb.set_pregunta(sintomas_once[1])
+            #self.declare(Fact(sintoma1=input(f"¿{sintomas_once[1]}?: ")))
+            self.declare(Fact(sintoma1=Respuesta()))
+        else:
+            #global pregunta
+            pregunta = sintomas_once[4]
+            abrir_ventana2()
+            self.declare(Fact(sintoma4=Respuesta()))
+
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma2=W())), Fact(sintoma1=MATCH.s1))
+    def sintoma_2(self, s1):
+        if s1 == "si":
+            global pregunta
+            pregunta = sintomas_once[2]
+            abrir_ventana2()
+            self.declare(Fact(sintoma2=Respuesta()))
+        else:
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa, el programa se cerrara", title="Continuar")
+            #print("Respuesta desconocida")
+            quit()
+            
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma3=W())), Fact(sintoma2=MATCH.s2))
+    def sintoma_3(self, s2):
+        if s2 == "si":
+            global pregunta
+            pregunta = sintomas_once[3]
+            abrir_ventana2()
+            self.declare(Fact(sintoma3=Respuesta()))
+        else:
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa, el programa se cerrara", title="Continuar")
+            #print("Respuesta desconocida")
+            quit()
+    
+    @Rule(Fact(action='encontrar_enfermedad'), Fact(sintoma3=MATCH.s3), NOT(Fact(mr=W())))
+    def sintoma_MR(self, s3):
+        if s3 == "si":
+            global pregunta
+            pregunta = "Su cultivo sufre de Mancha Purpura"
+            
+            pb.set_diagnostico("MANCHA PURPURA")
+            respuesta_ms = messagebox.askyesno(message="De a cuerdo a las preguntas respondidas tenemos un diagnóstico, ¿Desea continuar?", title="Continuar")
+            if respuesta_ms == True:
+               abrir_ventana_dg()
+               #print("Hola mundo")
+            else: 
+                print("Lo sentimos")
+            #Poner otra ventana pero con un boton que diga siguiente y este que abra la ventana de Diagnostico
+            
+            self.declare(Fact(mr="True"))
+            #print("Su cultivo sufre de Mancha Roja")
+            #KnowledgeEngine.reset()
+        else:
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            print("Respuesta desconocida")
+            #quit()
+            
+            
+
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma4=W())), NOT(Fact(mr=MATCH.mr)))
+    def sintoma_4(self):
+        #if mr == True:
+        #    pass
+        #else:
+        global pregunta
+        pregunta=sintomas_once[4]
+        abrir_ventana2()
+        self.declare(Fact(sintoma4=Respuesta()))
+        
+        #self.declare(Fact(sintoma4=input(f"¿{sintomas_once[4]}?: ")))
+        
+        
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma5=W())), Fact(sintoma4=MATCH.s4), NOT(Fact(sintoma7=W())), NOT(Fact(mr=MATCH.mr)))
+    def sintoma_5_y_7(self, s4):
+        if s4 == "si":
+            global pregunta
+            pregunta=sintomas_once[5]
+            abrir_ventana2()
+            self.declare(Fact(sintoma5=Respuesta()))
+            #self.declare(Fact(sintoma5=input(f"¿{sintomas_once[5]}?: ")))
+        else:
+            pregunta
+            pregunta=sintomas_once[7]
+            abrir_ventana2()
+            self.declare(Fact(sintoma7=Respuesta()))
+            #self.declare(Fact(sintoma7=input(f"¿{sintomas_once[7]}?: "))) 
+    
+   
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma6=W())), Fact(sintoma5=MATCH.s5), NOT(Fact(mr=MATCH.mr)))
+    def sintoma_6(self, s5):
+        if s5 == "si":
+            global pregunta
+            pregunta=sintomas_once[6]
+            abrir_ventana2()
+            self.declare(Fact(sintoma6=Respuesta()))
+            #self.declare(Fact(sintoma6=input(f"¿{sintomas_once[6]}?: ")))
+        else:
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            #print("Respuesta desconocida")
+            quit()
+            
+    @Rule(Fact(action='encontrar_enfermedad'), Fact(sintoma6=MATCH.s6), NOT(Fact(mr=MATCH.mr)))
+    def sintoma_PC(self, s6):
+        if s6 == "si":
+            #self.declare(Fact(pc="Su cultivo sufre Podredumbre del Cuello"))
+            
+            
+            pb.set_diagnostico("PODREDUMBRE DEL CUELLO")
+            respuesta_ms = messagebox.askyesno(message="De a cuerdo a las preguntas respondidas tenemos un diagnóstico, ¿Desea continuar?", title="Continuar")
+            if respuesta_ms == True:
+               abrir_ventana_dg()
+               #print("Hola mundo")
+            else: 
+                print("Lo sentimos")
+                
+            self.declare(Fact(pc=True))
+            #print("Su cultivo sufre Podredumbre del Cuello")
+            #KnowledgeEngine.reset()
+        else:
+            print("Respuesta desconocida")
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            quit() 
+    
+    
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma7=W())), AND(NOT(Fact(mr=MATCH.mr)), NOT(Fact(pc=MATCH.pc))))
+    def sintoma_7(self):
+        global pregunta
+        pregunta=sintomas_once[7]
+        abrir_ventana2()
+        self.declare(Fact(sintoma7=Respuesta()))
+        #self.declare(Fact(sintoma7=input(f"¿{sintomas_once[7]}?: "))) 
+            
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma8=W())),Fact(sintoma7=MATCH.s7), NOT(Fact(mr=MATCH.mr)), NOT(Fact(pc=MATCH.pc)))
+    def sintoma_8(self,s7):
+        if s7 == "si":
+            global pregunta
+            pregunta=sintomas_once[8]
+            abrir_ventana2()
+            self.declare(Fact(sintoma8=Respuesta()))
+            #self.declare(Fact(sintoma8=input(f"¿{sintomas_once[8]}?: "))) 
+        else:
+            print("Respuesta desconocida")
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            quit()
+            
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma9=W())),Fact(sintoma8=MATCH.s8), NOT(Fact(mr=MATCH.mr)), NOT(Fact(pc=MATCH.pc)))
+    def sintoma_9(self,s8):
+        if s8 == "si":
+            global pregunta
+            pregunta=sintomas_once[9]
+            abrir_ventana2()
+            self.declare(Fact(sintoma9=Respuesta()))
+            #self.declare(Fact(sintoma9=input(f"¿{sintomas_once[9]}?: ")))
+        else:
+            print("Respuesta desconocida")
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            quit()
+    
+    @Rule(Fact(action='encontrar_enfermedad'), NOT(Fact(sintoma10=W())),Fact(sintoma9=MATCH.s9), NOT(Fact(mr=MATCH.mr)), NOT(Fact(pc=MATCH.pc)))
+    def sintoma_10(self,s9):
+        if s9 == "si":
+            global pregunta
+            pregunta=sintomas_once[10]
+            abrir_ventana2()
+            self.declare(Fact(sintoma10=Respuesta()))
+            #self.declare(Fact(sintoma10=input(f"¿{sintomas_once[10]}?: "))) 
+        else:
+            print("Respuesta desconocida")
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            quit()
+            
+    @Rule(Fact(action='encontrar_enfermedad'), Fact(sintoma10=MATCH.s10), NOT(Fact(mr=MATCH.mr)), NOT(Fact(pc=MATCH.pc)))
+    def sintoma_RR(self,s10):
+        if s10 == "si":
+            pb.set_diagnostico("RAIZ ROSADA")
+            respuesta_ms = messagebox.askyesno(message="De a cuerdo a las preguntas respondidas tenemos un diagnóstico, ¿Desea continuar?", title="Continuar")
+            if respuesta_ms == True:
+               abrir_ventana_dg()
+               #print("Hola mundo")
+            else: 
+                print("Lo sentimos")
+            
+            self.declare(Fact(pc="Su cultivo sufre de Raiz Rosada"))
+            #print("Su cultivo sufre de Raiz Rosada")
+            #KnowledgeEngine.reset()
+        else:
+            print("Respuesta desconocida")
+            messagebox.showinfo(message="De a cuerdo a las preguntas respondidas no existe un diagnostico previo, le pedimos una disculpa", title="Continuar")
+            quit() 
+    
+    
+
+cargar_bs()
+ed = DiagnosticoEnfermedad()
+ed.reset()
+watch('RULES', 'FACTS')
+ed.run()
+#ed.reset()
+print("---------------------")
+watch('RULES', 'FACTS')
